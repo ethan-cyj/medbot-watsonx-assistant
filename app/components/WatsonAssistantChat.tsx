@@ -8,10 +8,24 @@ const WatsonAssistantChat = ({ patient_id, visit_id }: { patient_id: number, vis
       serviceInstanceID: '241a1cf1-b75c-423a-bb2a-5534a3bb9cc3', // The ID of your service instance.
       //openChatByDefault: true,
       onLoad: async (instance) => {
-        instance.updateChatContext({
-            patient_id: patient_id,
-            visit_id: visit_id,
-        });
+        await instance.restartConversation();
+        const sendObject = {
+            input: {
+                'message_type': 'text',
+                'text': '',
+            },
+            context: {
+              skills: {
+                ['actions skill']: {
+                  skill_variables: {
+                    patient_id: patient_id,
+                    visit_id: visit_id
+                  }
+                }
+              }
+            }
+          };
+        await instance.send(sendObject);
         await instance.render();
         await instance.toggleOpen();
       },
