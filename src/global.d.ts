@@ -6,6 +6,7 @@ declare global {
         serviceInstanceID: string;
         onLoad: (instance: any) => void;
         clientVersion?: string;
+        openChatByDefault?: boolean;
       };
     }
   }

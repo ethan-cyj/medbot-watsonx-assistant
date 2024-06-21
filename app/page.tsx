@@ -6,8 +6,8 @@ import WatsonAssistantChat from './components/WatsonAssistantChat';
 
 export default function Home() {
   const searchParams = useSearchParams();
-  const patient_id = searchParams.get('patient_id');
-  const visit_id = searchParams.get('visit_id');
+  const patient_id = parseInt(searchParams.get('patient_id') || '');
+  const visit_id = parseInt(searchParams.get('visit_id') || '');
 
   useEffect(() => {
     if (patient_id && visit_id) {
@@ -22,7 +22,7 @@ export default function Home() {
         <title>Welcome to Our Hospital</title>
         <meta name="description" content="Welcome to our hospital. We provide the best healthcare services." />
       </Head>
-      <WatsonAssistantChat />
+      <WatsonAssistantChat patient_id={patient_id} visit_id={visit_id} />
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
           <h1 className="text-4xl font-bold mb-4">Welcome to Our Hospital</h1>

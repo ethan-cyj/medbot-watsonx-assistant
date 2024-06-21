@@ -1,15 +1,22 @@
 import { useEffect } from 'react';
 
-const WatsonAssistantChat = () => {
+const WatsonAssistantChat = ({ patient_id, visit_id }: { patient_id: number, visit_id: number }) => {
   useEffect(() => {
     window.watsonAssistantChatOptions = {
       integrationID: '80442eb6-9c08-40bd-9435-634ff0cb5b80', // The ID of this integration.
       region: 'us-south', // The region your integration is hosted in.
       serviceInstanceID: '241a1cf1-b75c-423a-bb2a-5534a3bb9cc3', // The ID of your service instance.
+      //openChatByDefault: true,
       onLoad: async (instance) => {
+        instance.updateChatContext({
+            patient_id: patient_id,
+            visit_id: visit_id,
+        });
         await instance.render();
+        await instance.toggleOpen();
       },
     };
+
     setTimeout(() => {
       const script = document.createElement('script');
       script.src =
@@ -18,7 +25,7 @@ const WatsonAssistantChat = () => {
         '/WatsonAssistantChatEntry.js';
       document.head.appendChild(script);
     }, 0);
-  }, []);
+  }, [patient_id, visit_id]);
 
   return null;
 };
