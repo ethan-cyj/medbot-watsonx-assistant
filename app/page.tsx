@@ -1,5 +1,6 @@
 'use client';
-import { Suspense, useEffect } from 'react';
+
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Head from 'next/head';
 import WatsonAssistantChat from './components/WatsonAssistantChat';
@@ -8,12 +9,6 @@ const HomeContent = () => {
   const searchParams = useSearchParams();
   const patient_id = parseInt(searchParams.get('patient_id') || '1', 10);
   const visit_id = parseInt(searchParams.get('visit_id') || '1', 10);
-
-  useEffect(() => {
-    if (patient_id && visit_id) {
-      console.log(`Patient ID: ${patient_id}, Visit ID: ${visit_id}`);
-    }
-  }, [patient_id, visit_id]);
 
   return (
     <>
