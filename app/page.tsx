@@ -1,18 +1,17 @@
 'use client';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Head from 'next/head';
 import WatsonAssistantChat from './components/WatsonAssistantChat';
 
-export default function Home() {
+const HomeContent = () => {
   const searchParams = useSearchParams();
-  const patient_id = parseInt(searchParams.get('patient_id') || '');
-  const visit_id = parseInt(searchParams.get('visit_id') || '');
+  const patient_id = parseInt(searchParams.get('patient_id') || '1', 10);
+  const visit_id = parseInt(searchParams.get('visit_id') || '1', 10);
 
   useEffect(() => {
     if (patient_id && visit_id) {
       console.log(`Patient ID: ${patient_id}, Visit ID: ${visit_id}`);
-      // You can now use these values in your component logic or pass them to Watson Assistant
     }
   }, [patient_id, visit_id]);
 
@@ -86,5 +85,13 @@ export default function Home() {
         </footer>
       </main>
     </>
+  );
+};
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }

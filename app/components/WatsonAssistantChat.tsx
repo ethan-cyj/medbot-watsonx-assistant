@@ -9,7 +9,7 @@ const WatsonAssistantChat = ({ patient_id, visit_id }: { patient_id: number, vis
       //openChatByDefault: true,
       onLoad: async (instance) => {
         await instance.restartConversation();
-        const sendObject = {
+        const sendObject = { 
             input: {
                 'message_type': 'text',
                 'text': '',
