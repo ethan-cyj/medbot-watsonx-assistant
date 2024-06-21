@@ -4,38 +4,6 @@ import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Head from 'next/head';
 import WatsonAssistantChat from './components/WatsonAssistantChat';
-import React from 'react';
-
-type ErrorBoundaryProps = {
-  children: React.ReactNode;
-};
-
-class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  state = {
-    hasError: false
-  };
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: any, errorInfo: any) {
-    console.error("Error caught in ErrorBoundary: ", error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <h1>Something went wrong. Please try again later.</h1>;
-    }
-    return this.props.children; 
-  }
-}
-
 
 const HomeContent = () => {
   const searchParams = useSearchParams();
@@ -118,9 +86,7 @@ const HomeContent = () => {
 export default function Home() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ErrorBoundary>
-        <HomeContent />
-      </ErrorBoundary>
+      <HomeContent />
     </Suspense>
   );
 }
