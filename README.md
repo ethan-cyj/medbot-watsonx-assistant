@@ -108,6 +108,24 @@ These actions utilize the LLM generation extension:
 - IBM Code Engine
 - Watson Assistant
 
+#### Environment Variables
+ElasticSearch
+- ESUSER 
+- ESPASSWORD
+- ESHOST
+- ESPORT
+
+Watsonx.ai
+- PROJECT_ID
+- SPACE_ID
+
+IBM Cloud
+- IBM_CLOUD_APIKEY
+- IBM_CLOUD_REGION
+- COS_ASSET_ID
+- COS_BUCKET_NAME
+- CLOUDANT_URL
+
 ### Docker and IBM Cloud Registry Setup
 
 First, set up an IBM Cloud Registry namespace called `medbot`.
