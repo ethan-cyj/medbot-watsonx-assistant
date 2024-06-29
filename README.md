@@ -59,16 +59,16 @@ These actions utilize the LLM generation extension:
 
 ### Other Actions
 
-1. **Greeting**
+4. **Greeting**
     - **Description**: This action is triggered upon initialization.
     - **Process**: Based on `visit_id` and `patient_id`, the custom extension retrieves the patient's info from Cloudant (or whatever patient database is used). Ideally, this will include an authentication step, such as Singpass Login.
 
-2. **Refill Prescription**
+5. **Refill Prescription**
     - **Example Query**: "I need more painkiller meds"
     - **Description**: Guides the patient step-by-step through the process of making a prescription refill order and delivery.
     - **Process**: If the medication is a controlled substance, the patient is redirected to make a new appointment for it.
 
-3. **Manage Appointments**
+6. **Manage Appointments**
     - **Example Query**: "When are my next appointments?"
     - **Description**: Provides a step-by-step process for creating, modifying, and canceling appointments.
 
@@ -124,7 +124,7 @@ docker push us.icr.io/medbot/repo:amd
 
 ### Code Engine Deployment
 
-- Under configuration, reference the Docker image from ICR.
+Under configuration, reference the Docker image from ICR.
 - Create a registry secret using an IAM API key.
 - Set minimum instances to 1.
 - Input environment variables.
@@ -135,11 +135,15 @@ https://medbot-llm-search.1gpmytaegikv.us-south.codeengine.appdomain.cloud
 ```
 in your OpenAPI spec.
 
-### Watson Assistant Setup
+### Watsonx Assistant Setup
 
-Set up the Watson Assistant custom extension using the OpenAPI for the two required actions.
+- Import the Med Bot's actions using "med-bot-action-v7.json" in the root directory
 
-## Deployment
+- Set up the Watsonx Assistant custom extension using the OpenAPI for the two required actions.
+
+- Embed WA into a page component. We can copy-paste the code from "Web chat" under Integrations.
+
+## Next.js Deployment
 
 To deploy your Next.js app, follow the instructions in the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
 
