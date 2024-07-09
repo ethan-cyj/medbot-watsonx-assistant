@@ -61,7 +61,7 @@ if __name__ == '__main__':
 #            "patient_id": "S1234567A",
 #            "visit_id": 1,
 #            "intent": "medicine",
-#            "history": []
+#            "history": [],
 #            "additional_info": ["smoker", "seafood allergy", "nut allergy", "pregnant"]"
 #          }'
 
@@ -70,5 +70,5 @@ if __name__ == '__main__':
 #      -H "Content-Type: application/json" \
 #      -d '{
 #            "patient_id": 1,
-#            "visit_id": 1,
+#            "visit_id": 1
 #          }'
