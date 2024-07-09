@@ -7,6 +7,21 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+# Install system dependencies and upgrade vulnerable packages
+RUN apt-get update && \
+    apt-get install -y \
+    libgssapi-krb5-2 \
+    libk5crypto3 \
+    libkrb5-3 \
+    libkrb5support0 && \
+    apt-get install -y --only-upgrade \
+    libgssapi-krb5-2=1.20.1-2+deb12u2 \
+    libk5crypto3=1.20.1-2+deb12u2 \
+    libkrb5-3=1.20.1-2+deb12u2 \
+    libkrb5support0=1.20.1-2+deb12u2 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install pip requirements
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt

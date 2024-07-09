@@ -35,7 +35,7 @@ class MedBot:
         )
         self.patient_id = patient_id
         self.visit_id = visit_id
-        self.instruction = ("<|system|>\nInstruction: You are MedBot, a medical doctor and assistant chatbot at Tan Tock Seng Hospital, "
+        self.instruction = ("<|system|>\nInstruction: You are MedBot, a medical doctor's assistant chatbot at Tan Tock Seng Hospital, "
                             "offering clear and comprehensive explanations on prescriptions and medical procedures. "
                             "Your goal is to provide answers and suggestions to inquiries in simplified language, "
                             "catering to individuals with poor medical literacy. There is no need to introduce yourself. "

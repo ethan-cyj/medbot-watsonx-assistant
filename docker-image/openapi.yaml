@@ -5,7 +5,7 @@ info:
   description: API for MedBot generation extension
 
 servers:
-  - url: https://medbot-llm-search.1gpmytaegikv.us-south.codeengine.appdomain.cloud
+  - url: https://medbot-llm-search.1j4iosyvjmxq.us-south.codeengine.appdomain.cloud
     description: IBM Cloud Code Engine
 paths:
   /generate_response:

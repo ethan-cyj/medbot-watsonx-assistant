@@ -48,7 +48,9 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
 
 
-# curl -X POST https://medbot-llm-search.1gpmytaegikv.us-south.codeengine.appdomain.cloud[/](https://medbot-llm-search.1gpmytaegikv.us-south.codeengine.appdomain.cloud/)[generate_response](http://localhost:8081/generate_response) \
+# curl -X POST https://medbot-llm-search.1j4iosyvjmxq.us-south.codeengine.appdomain.cloud[/](https://medbot-llm-search.1gpmytaegikv.us-south.codeengine.appdomain.cloud/)[generate_response](http://localhost:8081/generate_response) \
+
+
 
 # curl -X POST http://localhost:8080/generate_response \
 #      -H "Content-Type: application/json" \
