@@ -6,7 +6,6 @@ from ibm_watsonx_ai import Credentials
 from ibm_watsonx_ai.foundation_models import Model
 
 PROJECT_ID = os.getenv("PROJECT_ID")
-SPACE_ID = os.getenv("SPACE_ID")
 IBM_CLOUD_APIKEY = os.getenv("IBM_CLOUD_APIKEY")
 IBM_CLOUD_REGION = os.getenv("IBM_CLOUD_REGION")
 
@@ -30,8 +29,7 @@ class MedBot:
             model_id=model_id,
             params=parameters,
             credentials=credentials,
-            project_id=PROJECT_ID,
-            space_id=SPACE_ID
+            project_id=PROJECT_ID
         )
         self.patient_id = patient_id
         self.visit_id = visit_id

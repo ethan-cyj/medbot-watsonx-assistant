@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 const WatsonAssistantChat = ({ patient_id, visit_id }: { patient_id: number, visit_id: number }) => {
   useEffect(() => {
     window.watsonAssistantChatOptions = {
-      integrationID: "40c592a6-ac8c-42d5-a786-03dfdb09007d", // The ID of this integration.
+      integrationID: "64d678cf-b74b-4210-84f8-70cb61ace85f", // The ID of this integration.
       region: "us-south", // The region your integration is hosted in.
       serviceInstanceID: "c4d86c9a-ff5b-4279-9bf0-ce7948c3d948", // The ID of your service instance.
       //openChatByDefault: true,
