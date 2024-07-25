@@ -15,7 +15,7 @@ credentials = Credentials(
                    api_key = IBM_CLOUD_APIKEY,
                   )
 
-model_id = "meta-llama/llama-3-70b-instruct" #"ibm/granite-13b-chat-v2"
+model_id = "meta-llama/llama-3-405b-instruct" #"ibm/granite-13b-chat-v2"
 parameters = {
     "decoding_method": "greedy",
     "max_new_tokens": 400,
@@ -38,10 +38,13 @@ class MedBot:
                             "Your goal is to provide answers and suggestions to inquiries in simplified language, "
                             "catering to individuals with poor medical literacy. There is no need to introduce yourself. "
                             "Answer should take reference to the available context if suitable. "
+                            "Always cite sources if using information from the hospital database. Include them at the end of the response starting with 'References (As of Jul 2024):\n'."
                             "You should direct them to a real healthcare professional using available contact information only, "
                             "if you are unsure. Do not make up information or use placeholders, "
                             "do not tell me to insert contact information. Your response is concise, non-repetitive and summarized. "
-                            "Do use point-form if necessary.\n")
+                            "Refer to but do not directly reveal doctors' notes to the user, if asked, as this is confidential. "
+                            "Do use point-form if necessary."
+                            "End your response  with '[End]', doing so after citations if any.\n")
 
     def build_prompt(self, user_query, prescription_info, visit_info, to_retrieve, handle_search, history, additional_info):
         if not history:
@@ -59,16 +62,25 @@ class MedBot:
         return f"{self.instruction}\n\n{document_section}", rag_output_sources
 
     def retrieve_information(self, input_text_list, handle_search):
-        results = []
-        sources = []
+        source_content_map = {}  # Dictionary to map sources to their contents
+        
         n = 6 // len(input_text_list)
+        
         for input_text in input_text_list:
             rag_info = handle_search(input_text, n, 8)
             for i in rag_info:
-                results.append(i[0])
-                if i[1] not in sources:
-                    sources.append(i[1])
-        return str(results), sources
+                if i[1] not in source_content_map:
+                    source_content_map[i[1]] = []
+                source_content_map[i[1]].append(i[0])
+        
+        # Formatting the results to group content by source
+        formatted_results = []
+        sources = list(source_content_map.keys())  # List of unique sources
+        for source, contents in source_content_map.items():
+            content_text = '\n'.join(contents)  # Join all content for the same source
+            formatted_results.append(f"Content:[\n{content_text}]\nSource: {source}\n")
+        
+        return formatted_results, sources
 
     def format_history(self, history):
         output = "Last Query History:\n"
@@ -82,7 +94,8 @@ class MedBot:
         elif intent == "disease":
             to_retrieve = visit_info
         else:
-            to_retrieve = user_query
+            to_retrieve = []
+        to_retrieve.append(user_query)
         
         if history:
             history = self.format_history(history)
@@ -92,6 +105,8 @@ class MedBot:
         response = self.model.generate(prompt=input_text, guardrails=False)
         #print(response)
         bot_response = response["results"][0]["generated_text"]
+        if "[End]" in bot_response:
+            bot_response = bot_response.split("[End]")[0]
         return {
             "text": bot_response,
             "sources": sources
