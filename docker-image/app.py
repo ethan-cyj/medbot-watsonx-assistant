@@ -43,6 +43,17 @@ def get_patient():
 
     return jsonify(patient_info)
 
+@app.route('/get_past_visits', methods=['POST'])
+def get_past_visits():
+    data = request.get_json()
+    patient_id = data.get('patient_id')
+    current_visit_id = data.get('visit_id')
+
+    cloudant_client = CloudantClient()
+    past_visits = cloudant_client.retrieve_all_visits(patient_id, current_visit_id)
+
+    return jsonify({"past_visits":past_visits})
+
 if __name__ == '__main__':
     print("Starting server...")
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

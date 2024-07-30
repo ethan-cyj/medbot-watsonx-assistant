@@ -137,3 +137,35 @@ paths:
           description: Invalid request
         '500':
           description: Internal server error
+  /get_past_visits:
+    post:
+      summary: Retrieve past visits for a patient
+      description: Retrieves a list of all past visit information for a specified patient, excluding the current visit.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                patient_id:
+                  type: integer
+                  example: 1
+                visit_id:
+                  type: integer
+                  example: 1
+      responses:
+        '200':
+          description: Successfully retrieved past visits
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  past_visits:
+                    type: string
+                    example: "Visit ID: 1\nPrescription Info:\n- Methotrexate, Dosage: 15 mg, Frequency: once a week, Instructions: Start with a low dose and monitor for side effects\n- Ibuprofen, Dosage: 400 mg, Frequency: as needed, Instructions: for pain and swelling, not to exceed three times a day\n- Folic acid, Dosage: 1 mg, Frequency: daily, Instructions: except on the day of Methotrexate, to reduce side effects\nVisit Info:\n- Rheumatoid Arthritis: Patient complains of persistent joint pain and stiffness, particularly in the hands and wrists, worsening in the morning lasting more than one hour. Doctors Remarks: Examination shows symmetrical joint swelling and tenderness in the wrists and MCP (metacarpophalangeal) joints. Symptoms and physical findings suggest an inflammatory process. Rheumatoid factor and anti-CCP (anti-cyclic citrullinated peptide) antibodies tests ordered to confirm diagnosis, along with CRP (C-reactive protein) and ESR (erythrocyte sedimentation rate) to assess inflammation levels.\n\n"
+        '400':
+          description: Invalid request
+        '500':
+          description: Internal server error

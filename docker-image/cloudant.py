@@ -51,3 +51,30 @@ class CloudantClient:
                 return {"error": "No documents found."}
         except ApiException as ae:
             return {"error": str(ae)}
+        
+    def retrieve_past_visits(self, patient_id, current_visit_id):
+        selector = {
+            "patient_id": patient_id
+        }
+        fields = ["visits"] 
+
+        try:
+            response = self.client.post_find(
+                db=self.db_name,
+                selector=selector,
+                fields=fields
+            ).get_result()
+
+            if response['docs']:
+                visits_info = ""
+                for doc in response['docs']:
+                    for visit in doc['visits']:
+                        if visit['visit_id'] != current_visit_id:
+                            visits_info += f"Visit ID: {visit['visit_id']}\n"
+                            visits_info += "Prescription Info:\n" + '\n'.join(visit['prescription_info']) + "\n"
+                            visits_info += "Visit Info:\n" + '\n'.join(visit['visit_info']) + "\n\n"
+                return visits_info if visits_info else "No past visits found for the given patient ID."
+            else:
+                return {"error": "No visits found for the given patient ID."}
+        except ApiException as ae:
+            return {"error": str(ae)}

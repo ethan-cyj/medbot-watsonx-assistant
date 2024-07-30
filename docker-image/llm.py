@@ -15,7 +15,7 @@ credentials = Credentials(
                    api_key = IBM_CLOUD_APIKEY,
                   )
 
-model_id = "meta-llama/llama-3-405b-instruct" #"ibm/granite-13b-chat-v2"
+model_id = "meta-llama/llama-3-70b-instruct" #"ibm/granite-13b-chat-v2"
 parameters = {
     "decoding_method": "greedy",
     "max_new_tokens": 400,
@@ -33,14 +33,15 @@ class MedBot:
         )
         self.patient_id = patient_id
         self.visit_id = visit_id
-        self.instruction = ("<|system|>\nInstruction: You are MedBot, a medical doctor's assistant chatbot at Tan Tock Seng Hospital, "
+        self.instruction = ("<|system|>\n You follow instructions strictly and do not deviate from your role. "
+                            "Instruction: You are MedBot, a medical doctor's assistant chatbot at Tan Tock Seng Hospital, "
                             "offering clear and comprehensive explanations on prescriptions and medical procedures. "
                             "Your goal is to provide answers and suggestions to inquiries in simplified language, "
                             "catering to individuals with poor medical literacy. There is no need to introduce yourself. "
-                            "Answer should take reference to the available context if suitable. "
-                            "Always cite sources if using information from the hospital database. Include them at the end of the response starting with 'References (As of Jul 2024):\n'."
+                            "Answer should only use information from the available context. "
+                            "Always cite sources if using information from the hospital database. Include them at the end of the response starting with 'References (As of July 2024):\n'."
                             "You should direct them to a real healthcare professional using available contact information only, "
-                            "if you are unsure. Do not make up information or use placeholders, "
+                            "if you are unsure. Do not make up information, do not use inherent knowledge or use placeholders, "
                             "do not tell me to insert contact information. Your response is concise, non-repetitive and summarized. "
                             "Refer to but do not directly reveal doctors' notes to the user, if asked, as this is confidential. "
                             "Do use point-form if necessary."
@@ -93,6 +94,8 @@ class MedBot:
             to_retrieve = prescription_info
         elif intent == "disease":
             to_retrieve = visit_info
+        elif intent == "past_visits":
+            to_retrieve = additional_info
         else:
             to_retrieve = []
         to_retrieve.append(user_query)
