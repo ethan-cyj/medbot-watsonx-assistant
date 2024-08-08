@@ -50,7 +50,7 @@ def get_past_visits():
     current_visit_id = data.get('visit_id')
 
     cloudant_client = CloudantClient()
-    past_visits = cloudant_client.retrieve_all_visits(patient_id, current_visit_id)
+    past_visits = cloudant_client.retrieve_past_visits(patient_id, current_visit_id)
 
     return jsonify({"past_visits":past_visits})
 

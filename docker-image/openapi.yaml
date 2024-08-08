@@ -163,8 +163,9 @@ paths:
                 type: object
                 properties:
                   past_visits:
-                    type: string
-                    example: "Visit ID: 1\nPrescription Info:\n- Methotrexate, Dosage: 15 mg, Frequency: once a week, Instructions: Start with a low dose and monitor for side effects\n- Ibuprofen, Dosage: 400 mg, Frequency: as needed, Instructions: for pain and swelling, not to exceed three times a day\n- Folic acid, Dosage: 1 mg, Frequency: daily, Instructions: except on the day of Methotrexate, to reduce side effects\nVisit Info:\n- Rheumatoid Arthritis: Patient complains of persistent joint pain and stiffness, particularly in the hands and wrists, worsening in the morning lasting more than one hour. Doctors Remarks: Examination shows symmetrical joint swelling and tenderness in the wrists and MCP (metacarpophalangeal) joints. Symptoms and physical findings suggest an inflammatory process. Rheumatoid factor and anti-CCP (anti-cyclic citrullinated peptide) antibodies tests ordered to confirm diagnosis, along with CRP (C-reactive protein) and ESR (erythrocyte sedimentation rate) to assess inflammation levels.\n\n"
+                    type: array
+                    items:
+                      type: string
         '400':
           description: Invalid request
         '500':

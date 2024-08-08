@@ -66,15 +66,14 @@ class CloudantClient:
             ).get_result()
 
             if response['docs']:
-                visits_info = ""
+                visits_info = []
                 for doc in response['docs']:
                     for visit in doc['visits']:
                         if visit['visit_id'] != current_visit_id:
-                            visits_info += f"Visit ID: {visit['visit_id']}\n"
-                            visits_info += "Prescription Info:\n" + '\n'.join(visit['prescription_info']) + "\n"
-                            visits_info += "Visit Info:\n" + '\n'.join(visit['visit_info']) + "\n\n"
-                return visits_info if visits_info else "No past visits found for the given patient ID."
-            else:
-                return {"error": "No visits found for the given patient ID."}
+                            visit_details = f"Visit ID: {visit['visit_id']}\n"
+                            visit_details += "Prescription Info:\n" + '\n'.join(visit['prescription_info']) + "\n"
+                            visit_details += "Visit Info:\n" + '\n'.join(visit['visit_info']) + "\n\n"
+                            visits_info.append(visit_details)
+                return visits_info 
         except ApiException as ae:
             return {"error": str(ae)}
